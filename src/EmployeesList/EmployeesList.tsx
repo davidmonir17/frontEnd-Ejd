@@ -14,7 +14,19 @@ import EditFormEmploye from "./EditForm";
 import { date } from "yup";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-import { color } from '@mui/system';
+import AddEmployeeModal from "./AddEmployeeModal";
+
+
+const MyButton ={
+  margin: '8px',
+  background: 'linear-gradient(45deg, #02cf24 30%, #FF8E53 90%)',
+  border: 0,
+  borderRadius: 3,
+  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  color: 'white',
+  //height: 48,
+  padding: '0 30px',
+};
 
 
 const style = {
@@ -29,13 +41,40 @@ const style = {
   p: 4,
 };
 
+
 const EmployeesList = () => {
   const baseURL = "https://jsonplaceholder.typicode.com/posts";
   const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
+  const [AddmodalOpen, setAddModalOpen] = useState(false);
+
   const [selectedEmployee, setSelectedEmployee] =
     useState<EmployeeInterface | null>(null);
   const user = useSelector((state) => state.user);
+  const handleModalOpen = () => {
+    setAddModalOpen(true);
+  };
 
+  const handleModalClose = () => {
+    setAddModalOpen(false);
+  };
+
+
+  const DeleteEmployee= async (empid:number)=>{
+    //console.log(empid);
+    try {
+      const res = await axios.delete(`https://localhost:44339/api/Manager/${user.empiId}/employee/${empid}`, {
+        headers: {
+          Authorization: `Bearer ${user.Token}`,
+        },
+      });
+      const tempEmployees = [...employees];
+      const filteredEmployees = tempEmployees.filter((employee) => employee.id !== empid);
+      setEmployees(filteredEmployees);
+    } catch (err) {
+      alert("could not delete employees");
+    }
+  
+  }
   const [open, setOpen] = React.useState(false);
   const handleOpen = (emp: EmployeeInterface) => {
     setSelectedEmployee(emp);
@@ -71,6 +110,14 @@ const EmployeesList = () => {
   
   }, []);
 
+  const AddEmployeehandler = (emp: EmployeeInterface) => {
+
+    console.log(emp);
+    const tempEmployees = [...employees,emp];
+    console.log(tempEmployees);
+   
+    setEmployees(tempEmployees);
+  };
   const updateEmployee = (emp: EmployeeInterface) => {
     const tempEmployees = [...employees];
     const neededEmployeeIndex = tempEmployees.findIndex((e) => e.id == emp.id);
@@ -93,12 +140,19 @@ const EmployeesList = () => {
               <TableCell align="center">Phone</TableCell>
               <TableCell align="center">Email</TableCell>
               <TableCell align="center">department Name</TableCell>
+              <TableCell align="center">
+              
+      
+      <Button  sx={MyButton} onClick={handleModalOpen}> New Employee</Button>
+      <AddEmployeeModal AddEmployee={AddEmployeehandler} open={AddmodalOpen} onClose={handleModalClose} />
+    
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {employees.map((row) => (
               <TableRow
-                onClick={() => handleOpen(row)}
+               
                 key={row.id}
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
@@ -116,8 +170,8 @@ const EmployeesList = () => {
                       
                       disableElevation
                       aria-label="Disabled elevation buttons">
-  <Button sx={ {backgroundColor:'red' ,color:'black'}}> Delete</Button>
-  <Button>Edite</Button>
+  <Button sx={ {backgroundColor:'red' ,color:'black',flexGrow: 1, flexBasis: '0%' }} onClick={ ()=> DeleteEmployee(row.id)}> Delete</Button>
+  <Button  sx={ {backgroundColor:'yellowgreen' , color:'black',flexGrow: 1, flexBasis: '0%' }}  onClick={() => handleOpen(row)}> Edite  </Button>
 </ButtonGroup>
 </TableCell>
               </TableRow>
