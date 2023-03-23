@@ -20,6 +20,9 @@ const UserReducer = createSlice({
       state.Roles = action.payload.roles;
       state.Username = action.payload.userName;
       state.Token = action.payload.token;
+      state.empiId= action.payload.empiId;
+      state.depId= action.payload.depId;
+
     },
     logout: (state, action) => {
       state.IsAuthenticated = false;
@@ -27,6 +30,8 @@ const UserReducer = createSlice({
       state.Roles = undefined;
       state.Username = undefined;
       state.Token = undefined;
+      state.empiId= undefined;
+      state.depId= undefined;
     },
   },
 });

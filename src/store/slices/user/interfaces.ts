@@ -4,4 +4,6 @@ export interface UserInterface {
   Email?: string;
   Roles?: string[];
   Token?: string;
+  empiId?:number ;
+  depId?:number;
 }

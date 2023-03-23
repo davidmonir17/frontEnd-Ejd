@@ -5,4 +5,5 @@ export interface EmployeeInterface {
   email: string;
   departmentName: string;
   depId: number;
+  birthday:Date;
 }

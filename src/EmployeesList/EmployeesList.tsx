@@ -10,7 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { EmployeeInterface } from "./interfaces";
 import { Box, Container, Modal, Typography } from "@mui/material";
-import EditForm from "./EditForm";
+import EditFormEmploye from "./EditForm";
+import { date } from "yup";
 
 const style = {
   position: "absolute" as "absolute",
@@ -44,17 +45,26 @@ const EmployeesList = () => {
   useEffect(() => {
     const getEmployees = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/Manager/1", {
+        const res = await axios.get(`https://localhost:44339/api/Manager/${user.empiId}`, {
           headers: {
             Authorization: `Bearer ${user.Token}`,
           },
         });
-        setEmployees(res.data);
+        const tempEmployees1= [...res.data];
+      
+        setEmployees(  tempEmployees1.map(emp=>{
+          return{
+
+            ...emp,
+            birthday: new Date(emp.birthday).toISOString().substring(0, 10)
+          };
+        }));
       } catch (err) {
         alert("could not get employees");
       }
     };
     getEmployees();
+  
   }, []);
 
   const updateEmployee = (emp: EmployeeInterface) => {
@@ -64,6 +74,7 @@ const EmployeesList = () => {
     tempEmployees[neededEmployeeIndex].name = emp.name;
     tempEmployees[neededEmployeeIndex].phone = emp.phone;
     tempEmployees[neededEmployeeIndex].depId = emp.depId;
+    tempEmployees[neededEmployeeIndex].birthday = emp.birthday;
     setEmployees(tempEmployees);
   };
 
@@ -109,7 +120,7 @@ const EmployeesList = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <EditForm
+          <EditFormEmploye
             selectedEmployee={selectedEmployee}
             handleClose={handleClose}
             updateEmployee={updateEmployee}

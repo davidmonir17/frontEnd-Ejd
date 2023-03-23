@@ -36,7 +36,7 @@ const Login = () => {
             onSubmit={async (values) => {
               try {
                 const res = await axios.post(
-                  "http://localhost:5000/api/Admin/token",
+                  "https://localhost:44339/api/Admin/token",
                   { ...values },
                   {
                     headers: {
