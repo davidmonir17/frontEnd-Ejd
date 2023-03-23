@@ -4,7 +4,8 @@ import { EmployeeInterface } from "./interfaces";
 import { Formik, Form, ErrorMessage, Field, validateYupSchema } from "formik";
 import * as Yup from "yup";
 import { TextField, Button } from '@mui/material';
-
+import { useSelector } from "../store";
+import axios from "axios";
 import { styled } from '@mui/material/styles';
 
 const MyButton = styled(Button)({
@@ -41,6 +42,8 @@ function EditFormEmploye({
   handleClose: () => void;
   updateEmployee: (emp: EmployeeInterface) => void;
 }) {
+  const user = useSelector((state) => state.user);
+
   
   return (
     <Formik
@@ -58,15 +61,19 @@ function EditFormEmploye({
       onSubmit={async (values) => {
         try {
           
-          //call backend
-        //   const res = await axios.get(`https://localhost:44339/api/Manager/${user.empiId}`, {
-        //   headers: {
-        //     Authorization: `Bearer ${user.Token}`,
-        //   },
-        // });
-          handleClose();
-          //updateEmployee(values);
-
+         // call backend
+          const res = await axios.put(`https://localhost:44339/api/Manager/${user.empiId}`,values, {
+          headers: {
+            Authorization: `Bearer ${user.Token}`,
+          },
+        });
+        //console.log(res);
+        const newBirthday = new Date(res.data.birthday).toISOString().substring(0, 10);
+       
+        res.data.birthday=newBirthday
+                  //birthday:new Date(...res.data.birthday).toISOString().substring(0, 10)
+        updateEmployee(res.data);
+        handleClose();
         } catch (err) {
           console.log(err);
           alert("Could not login");
@@ -106,7 +113,7 @@ function EditFormEmploye({
           /> */}
       
       <div>
-            <Field as={TextField} inputProps={{ min: "2019-01-24", max: "2020-05-31" }} type="date" id="Birthday" name="birthday" />
+            <Field as={TextField} inputProps={{ min: "1920-01-24", max: "2020-05-31" }} type="date" id="Birthday" name="birthday" />
             {/* {errors.name && touched.name && <div>{errors.name}</div>} */}
             <ErrorMessage name="birthday" >
             { msg => <div style={{ color: 'red' }}>{msg}</div> }

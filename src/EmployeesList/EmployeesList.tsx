@@ -12,6 +12,10 @@ import { EmployeeInterface } from "./interfaces";
 import { Box, Container, Modal, Typography } from "@mui/material";
 import EditFormEmploye from "./EditForm";
 import { date } from "yup";
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
+import { color } from '@mui/system';
+
 
 const style = {
   position: "absolute" as "absolute",
@@ -108,6 +112,14 @@ const EmployeesList = () => {
                 <TableCell align="center">{row.phone}</TableCell>
                 <TableCell align="center">{row.email}</TableCell>
                 <TableCell align="center">{row.departmentName}</TableCell>
+                <TableCell align="center"> <ButtonGroup
+                      
+                      disableElevation
+                      aria-label="Disabled elevation buttons">
+  <Button sx={ {backgroundColor:'red' ,color:'black'}}> Delete</Button>
+  <Button>Edite</Button>
+</ButtonGroup>
+</TableCell>
               </TableRow>
             ))}
           </TableBody>
