@@ -1,0 +1,37 @@
+.leftbar{
+    // height: 100%;
+    // border-right: 1px solid lightgray ;
+    flex: 2;
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 70px);
+    .container{
+        padding: 20px;
+      .menu{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+        .user{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+
+        }
+        .items{
+             display: flex;
+             cursor: pointer;
+            
+            gap: 10px;
+            img{
+                width: 30px;
+            }
+            span{
+
+            }
+        }
+      }  
+    }
+
+}
