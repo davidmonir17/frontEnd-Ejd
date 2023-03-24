@@ -1,6 +1,6 @@
 export interface UserInterface {
   IsAuthenticated: boolean;
-  Username?: string;
+  username?: string;
   Email?: string;
   Roles?: string[];
   Token?: string;

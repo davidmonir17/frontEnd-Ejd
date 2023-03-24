@@ -13,6 +13,7 @@ import LeftBar from "./Component/LeftBar/LeftBar";
 import Manager from "./Manager/Manager";
 import { useSelector } from "./store";
 import { Container } from "@mui/material";
+import Task from "./TasksList/Task";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -53,12 +54,17 @@ function App() {
           path: "/Manager/:MgrId",
           element: <Manager />,
         },
+        {
+          path: "/Manager/Tasks",
+          element: <Task />,
+        },
       ],
     },
     {
       path: "/login",
       element: <Login />,
     },
+    
   ]);
   return (
     <div>

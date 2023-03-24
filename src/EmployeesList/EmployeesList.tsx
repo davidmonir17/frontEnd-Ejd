@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { EmployeeInterface } from "./interfaces";
-import { Box, Container, Modal, Typography } from "@mui/material";
+import { Box, Container, Modal, Pagination, Typography } from "@mui/material";
 import EditFormEmploye from "./EditForm";
 import { date } from "yup";
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -43,7 +43,10 @@ const style = {
 
 
 const EmployeesList = () => {
-  const baseURL = "https://jsonplaceholder.typicode.com/posts";
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+  const [tasksPerPage, setTasksPerPage] = useState(2);
+
   const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
   const [AddmodalOpen, setAddModalOpen] = useState(false);
 
@@ -95,7 +98,13 @@ const EmployeesList = () => {
         });
         const tempEmployees1= [...res.data];
       
-        setEmployees(  tempEmployees1.map(emp=>{
+
+        setPageCount(Math.ceil(tempEmployees1.length / tasksPerPage));
+        const startIndex = currentPage * tasksPerPage;
+        const endIndex = startIndex + tasksPerPage;
+    const paginatedTasks = tempEmployees1.slice(startIndex, endIndex);
+
+        setEmployees(  paginatedTasks.map(emp=>{
           return{
 
             ...emp,
@@ -108,7 +117,7 @@ const EmployeesList = () => {
     };
     getEmployees();
   
-  }, []);
+  }, [currentPage,employees]);
 
   const AddEmployeehandler = (emp: EmployeeInterface) => {
 
@@ -193,6 +202,15 @@ const EmployeesList = () => {
           />
         </Box>
       </Modal>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+      <Pagination 
+        count={pageCount} 
+        page={currentPage + 1} 
+        onChange={(event, page) => setCurrentPage(page - 1)}
+        color="primary" 
+        variant="outlined" 
+      />
+    </Box>
     </Container>
   );
 };
