@@ -10,8 +10,8 @@ import { EmployeeInterface } from '../EmployeesList/interfaces';
 
 
 
-const EditTask = ({ selectedemp ,selectedTask ,open , onClose,EditeTask }:{
-    selectedemp: EmployeeInterface|null,
+const EditTask = ({ selectedTask ,open , onClose,EditeTask }:{
+    
     selectedTask: TaskInterface | null,
     onClose:()=> void,
     open:boolean,
@@ -55,15 +55,15 @@ const EditTask = ({ selectedemp ,selectedTask ,open , onClose,EditeTask }:{
       };
 
       const user = useSelector((state) => state.user);
-      const [selectedEmployee, setSelectedEmployee] =  useState<EmployeeInterface|null>(selectedemp);
-      const [selectedEmployeeid, setSelectedEmployeeid] =  useState(selectedemp?.id || 0);
+      const [selectedEmployee, setSelectedEmployee] =  useState<EmployeeInterface|null>();
+      const [selectedEmployeeid, setSelectedEmployeeid] =  useState( 0);
       const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
 
       const initialValues = {
         name: selectedTask?.name,
         description: selectedTask?.description,
         submitionDate:selectedTask?.submitionDate,
-        selectedEmployee:selectedemp
+        selectedEmployee:selectedTask?.employeeId
       };
     
       const validationSchema = Yup.object().shape({
@@ -142,7 +142,7 @@ const EditTask = ({ selectedemp ,selectedTask ,open , onClose,EditeTask }:{
             <Select
           label="Employee"
           fullWidth
-          defaultValue={selectedemp?.id}
+          defaultValue={selectedTask?.employeeId}
           value={selectedEmployee?.id}
           onChange={(event) => setsubmeit(event)}
           margin="none"

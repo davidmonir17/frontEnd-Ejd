@@ -54,7 +54,7 @@ const TasksList = () => {
   const [Tasks, setTasks] = useState<TaskInterface[]>([]);
   const [AddmodalOpen, setAddModalOpen] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const [selectedEmployee, setSelectedEmployee] =  useState<EmployeeInterface|null>(null);
+  // const [selectedEmployee, setSelectedEmployee] =  useState<EmployeeInterface|null>(null);
 
 
   const [selectedTask, setselectedTask] = useState<TaskInterface | null>(null);
@@ -68,22 +68,21 @@ const TasksList = () => {
   };
 
   const handleOpen = async (tsk: TaskInterface) => {
-    try{
-      const resemp = await axios.get(`https://localhost:44339/api/Manager/${user.empiId}/employee/${tsk?.employeeId}`, {
-        headers: {
-          Authorization: `Bearer ${user.Token}`,
-        },
-      });
-      setSelectedEmployee(resemp.data);
-    }
-    catch{
-      alert("could not delete Task");
-    }
+    // try{
+    //   const resemp = await axios.get(`https://localhost:44339/api/Manager/${user.empiId}/employee/${tsk?.employeeId}`, {
+    //     headers: {
+    //       Authorization: `Bearer ${user.Token}`,
+    //     },
+    //   });
+    //   setSelectedEmployee(resemp.data);
+    // }
+    // catch{
+    //   alert("could not delete Task");
+    // }
     setselectedTask(tsk);
     setOpen(true);
   };
   const handleClose = () => {
-    setSelectedEmployee(null);
     setselectedTask(null);
     setOpen(false);
   };
@@ -226,7 +225,7 @@ const TasksList = () => {
 <Button sx={ {backgroundColor:'red' ,color:'black',flexGrow: 1, flexBasis: '0%' }} onClick={ ()=> DeleteTask(row.id)}> Delete</Button>
 <Button  sx={ {backgroundColor:'yellowgreen' , color:'black',flexGrow: 1, flexBasis: '0%' }} 
  onClick={() => handleOpen(row)}> Edite  </Button>
-     <EditTask selectedemp={selectedEmployee} selectedTask={selectedTask} EditeTask={updatetask} open={open} onClose={handleClose} />
+     <EditTask selectedTask={selectedTask} EditeTask={updatetask} open={open} onClose={handleClose} />
 
 </ButtonGroup>
 </TableCell>

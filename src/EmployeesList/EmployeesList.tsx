@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { EmployeeInterface } from "./interfaces";
-import { Box, Container, Modal, Pagination, Typography } from "@mui/material";
+import { Box, Container, Modal, Typography, Pagination } from '@mui/material';
 import EditFormEmploye from "./EditForm";
 import { date } from "yup";
 import ButtonGroup from '@mui/material/ButtonGroup';

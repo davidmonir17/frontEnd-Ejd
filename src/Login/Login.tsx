@@ -6,6 +6,8 @@ import axios from "axios";
 import { useDispatch } from "../store";
 import { login } from "../store/slices/user";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -13,8 +15,18 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+   useEffect(() => {
+    const token = localStorage.getItem("userToken");
+    if (token) {
+    const  user=  JSON.parse(token);
+      // If user token exists in local storage, dispatch login action with token
+      dispatch(login( user ));
+      navigate("/");
+    }
+  }, [dispatch, navigate]);
+
 
   return (
     <div className="loginN">
@@ -45,6 +57,7 @@ const Login = () => {
                   }
                 );
                 dispatch(login(res.data));
+                localStorage.setItem("userToken", JSON.stringify(res.data)); // Store user token in local storage
                 navigate("/");
               } catch (err) {
                 console.log(err);
