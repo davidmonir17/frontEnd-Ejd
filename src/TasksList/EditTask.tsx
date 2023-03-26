@@ -114,7 +114,7 @@ const EditTask = ({ selectedTask ,open , onClose,EditeTask }:{
        }
   return (
     <Dialog open={open} onClose={handleClose}>
-    <DialogTitle>Add New Employee</DialogTitle>
+    <DialogTitle>Edit Employee</DialogTitle>
     <DialogContent>
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         {({ errors, touched }) => (

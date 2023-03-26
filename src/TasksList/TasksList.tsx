@@ -224,7 +224,7 @@ const TasksList = () => {
                     aria-label="Disabled elevation buttons">
 <Button sx={ {backgroundColor:'red' ,color:'black',flexGrow: 1, flexBasis: '0%' }} onClick={ ()=> DeleteTask(row.id)}> Delete</Button>
 <Button  sx={ {backgroundColor:'yellowgreen' , color:'black',flexGrow: 1, flexBasis: '0%' }} 
- onClick={() => handleOpen(row)}> Edite  </Button>
+ onClick={() => handleOpen(row)}> Edit   </Button>
      <EditTask selectedTask={selectedTask} EditeTask={updatetask} open={open} onClose={handleClose} />
 
 </ButtonGroup>

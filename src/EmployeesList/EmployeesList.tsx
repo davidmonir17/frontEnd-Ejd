@@ -180,7 +180,7 @@ const EmployeesList = () => {
                       disableElevation
                       aria-label="Disabled elevation buttons">
   <Button sx={ {backgroundColor:'red' ,color:'black',flexGrow: 1, flexBasis: '0%' }} onClick={ ()=> DeleteEmployee(row.id)}> Delete</Button>
-  <Button  sx={ {backgroundColor:'yellowgreen' , color:'black',flexGrow: 1, flexBasis: '0%' }}  onClick={() => handleOpen(row)}> Edite  </Button>
+  <Button  sx={ {backgroundColor:'yellowgreen' , color:'black',flexGrow: 1, flexBasis: '0%' }}  onClick={() => handleOpen(row)}> Edit   </Button>
 </ButtonGroup>
 </TableCell>
               </TableRow>
